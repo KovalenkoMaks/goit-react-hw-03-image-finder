@@ -1,14 +1,19 @@
 import { Formik, Field, Form } from 'formik';
+import swal from 'sweetalert';
+
 import style from 'components/Styles.module.css';
 const initialValues = {
   searchForm: '',
 };
 
-export default function Searchbar({ onSubmit }) {
+export default function Searchbar({ onSubmit, search }) {
   const handleSubmit = (values, { resetForm }) => {
-    // console.log(values);
-    resetForm();
-    onSubmit(values.searchForm);
+    if (search.toLowerCase() !== values.searchForm.toLowerCase().trim()) {
+      resetForm();
+      onSubmit(values.searchForm);
+    } else {
+      swal('Uuups!', 'You have already make this search!', 'info');
+    }
   };
   return (
     <>

@@ -1,9 +1,51 @@
-// Під час кліку на елемент галереї повинно відкриватися модальне вікно з темним оверлеєм і відображатися велика версія зображення. Модальне вікно повинно закриватися по натисканню клавіші ESC або по кліку на оверлеї.
+import style from 'components/Styles.module.css';
+import { Component } from 'react';
 
-// Зовнішній вигляд схожий на функціонал цього VanillaJS-плагіна, тільки замість білого модального вікна рендериться зображення (у прикладі натисніть Run). Анімацію робити не потрібно!
+export default class Modal extends Component {
+  stats = {};
 
-// <div class="overlay">
-//   <div class="modal">
-//     <img src="" alt="" />
-//   </div>
-// </div>
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleEsc);
+    document.querySelector('html').style = 'overflow: hidden';
+    // window.addEventListener('scroll', this.stopScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleEsc);
+    document.querySelector('html').style = 'overflow: visible';
+    // window.removeEventListener('scroll', this.stopScroll);
+  }
+  handleEsc = e => {
+    if (e.key === 'Escape') {
+      this.props.closeModal();
+    }
+  };
+  handeleBackDropClick = e => {
+    if (e.currentTarget === e.target) {
+      this.props.closeModal();
+    }
+  };
+  stopScroll() {
+    window.scrollTo(0, 0);
+  }
+  render() {
+    const { modalImgId } = this.props;
+    const [img] = modalImgId;
+    return (
+      <div
+        key={img.id}
+        className={style.Overlay}
+        onClick={this.handeleBackDropClick}
+      >
+        <div className={style.Modal}>
+          <img
+            src={img.largeImageURL}
+            alt={img.tags}
+            width="600"
+            height="800"
+          />
+        </div>
+      </div>
+    );
+  }
+}
