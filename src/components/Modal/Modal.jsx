@@ -7,13 +7,11 @@ export default class Modal extends Component {
   componentDidMount() {
     window.addEventListener('keydown', this.handleEsc);
     document.querySelector('html').style = 'overflow: hidden';
-    // window.addEventListener('scroll', this.stopScroll);
   }
 
   componentWillUnmount() {
     window.removeEventListener('keydown', this.handleEsc);
     document.querySelector('html').style = 'overflow: visible';
-    // window.removeEventListener('scroll', this.stopScroll);
   }
   handleEsc = e => {
     if (e.key === 'Escape') {

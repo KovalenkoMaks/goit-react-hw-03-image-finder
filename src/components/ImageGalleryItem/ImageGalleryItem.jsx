@@ -1,7 +1,6 @@
 import style from 'components/Styles.module.css';
 export default function ImageGalleryItem({ e, showModal }) {
   function handelClick(e) {
-    // console.log(e.target.id);
     showModal(e.target.id);
   }
   return (
